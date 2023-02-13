@@ -21,10 +21,10 @@ public class Cliente extends Conexion{
             String mensajeServer= input_server.readUTF();
             System.out.println(mensajeServer);
 
-            //System.out.println("Dime el radio del ciruculo (cm):");
-            int num= scan.nextInt();
-            output_cliente.writeInt(num);
-            System.out.println("Cliente a dicho "+num);
+            String operacion= scan.next();
+            output_cliente.writeUTF(operacion);
+
+            System.out.println("Cliente a dicho "+operacion);
 
             /*----- Lo que recibe el cliente de parte de servidor -----*/
 

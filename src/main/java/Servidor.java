@@ -3,6 +3,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 public class Servidor extends Conexion{
+    int num;
+    String operador;
+
     public Servidor() throws IOException {
         super("Servidor");
     }
@@ -14,18 +17,38 @@ public class Servidor extends Conexion{
 
             //EJERCICIO:
             output_cliente= new DataOutputStream(skCliente.getOutputStream());
-            output_cliente.writeUTF("Dime el radio del ciruculo (cm):");
+            output_cliente.writeUTF("¿Que necesita calcular?");
             intput_cliente=new DataInputStream(skCliente.getInputStream());
 
-            //recogida de datos introducidos por cliente
+            //recogida de datos introducidos por cliente y mostrado en pantalla servidor
             int radio = intput_cliente.readInt();
             System.out.println("-He leido: "+radio);
 
             //Calculo del aurea del circulo
-            int res= (int) (Math.PI+radio*radio);
+           /* int res= (int) (Math.PI+radio*radio);
             System.out.println("-El area es: "+res);
             //mmensaje con el resultado mostrando tanto el radio como el resultado del calculo
-            output_cliente.writeUTF("El area de  circulo con radio "+ radio + " es de : "+res+" cm.");
+            output_cliente.writeUTF("El area de  circulo con radio "+ radio + " es de : "+res+" cm.");*/
+
+            //OPERACIONES
+            operador=intput_cliente.readUTF();
+
+            if (operador.contentEquals("-")){
+                int res = num - num;
+                output_cliente.writeInt(Integer.parseInt("El resultado del servidor es: "+res));
+            }
+            if (operador.contentEquals("+")){
+                int res = num + num;
+                output_cliente.writeInt(Integer.parseInt("El resultado del servidor es: "+res));
+            }
+            if (operador.contentEquals("*")){
+                int res = num * num;
+                output_cliente.writeInt(Integer.parseInt("El resultado del servidor es: "+res));
+            }
+            if (operador.contentEquals("/")){
+                int res = num / num;
+                output_cliente.writeInt(Integer.parseInt("El resultado del servidor es: "+res));
+            }
 
         }catch (Exception e){
             //mensaje de error en caso de fallos en la conexión
