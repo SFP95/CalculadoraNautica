@@ -5,9 +5,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Conexion {
-    private  final int _PUERTO=1234;
-    private  final String _HOST="localhost";
-    protected  String mensajeServidor;
+    private  final int _PUERTO=6678;
+    private  final String _HOST="127.0.0.1";
     protected ServerSocket skServidor;
     protected Socket skCliente;
     protected DataOutputStream output_Server, output_cliente;
