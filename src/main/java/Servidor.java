@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class Servidor extends Conexion{
     int num;
-    String operador;
+    String operacion;
 
     public Servidor() throws IOException {
         super("Servidor");
@@ -21,8 +21,14 @@ public class Servidor extends Conexion{
             intput_cliente=new DataInputStream(skCliente.getInputStream());
 
             //recogida de datos introducidos por cliente y mostrado en pantalla servidor
-            int radio = intput_cliente.readInt();
-            System.out.println("-He leido: "+radio);
+            operacion = intput_cliente.readUTF();
+            //System.out.println("-He leido: "+operacion);
+            String[] operacion_cliente=operacion.split(" ");
+            int num1= Integer.parseInt(operacion_cliente[0]);
+            String op= operacion_cliente[4];
+            int num2= Integer.parseInt(operacion_cliente[6]);
+
+            //System.out.println("Cliente me ha dicho: "+num1+op+num2);
 
             //Calculo del aurea del circulo
            /* int res= (int) (Math.PI+radio*radio);
@@ -30,23 +36,22 @@ public class Servidor extends Conexion{
             //mmensaje con el resultado mostrando tanto el radio como el resultado del calculo
             output_cliente.writeUTF("El area de  circulo con radio "+ radio + " es de : "+res+" cm.");*/
 
-            //OPERACIONES
-            operador=intput_cliente.readUTF();
+            //OPERACIONES:
 
-            if (operador.contentEquals("-")){
-                int res = num - num;
+            if (op == "-"){
+                int res = num1 - num2;
                 output_cliente.writeInt(Integer.parseInt("El resultado del servidor es: "+res));
             }
-            if (operador.contentEquals("+")){
-                int res = num + num;
+            if (op == "+"){
+                int res = num1 + num2;
                 output_cliente.writeInt(Integer.parseInt("El resultado del servidor es: "+res));
             }
-            if (operador.contentEquals("*")){
-                int res = num * num;
+            if (op == "*"){
+                int res = num1 * num2;
                 output_cliente.writeInt(Integer.parseInt("El resultado del servidor es: "+res));
             }
-            if (operador.contentEquals("/")){
-                int res = num / num;
+            if (op == "/"){
+                int res = num1 / num2;
                 output_cliente.writeInt(Integer.parseInt("El resultado del servidor es: "+res));
             }
 

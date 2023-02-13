@@ -30,8 +30,8 @@ public class Cliente extends Conexion{
 
             input_server= new DataInputStream(skCliente.getInputStream());
 
-            String resuesta= input_server.readUTF();
-            System.out.println(resuesta);
+            String respuesta= input_server.readUTF();
+            System.out.println(respuesta);
 
         }catch (Exception e){
             //mensaje de error en caso de fallos en la conexión
