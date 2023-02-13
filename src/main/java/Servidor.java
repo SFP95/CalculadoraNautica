@@ -23,6 +23,9 @@ public class Servidor extends Conexion{
             //recogida de datos introducidos por cliente y mostrado en pantalla servidor
             operacion = intput_cliente.readUTF();
             //System.out.println("-He leido: "+operacion);
+
+            //Metemos la recogida en una arrays de tipo string para poder recogerlo y
+            // separarlo en distintas variables : num 1, op,  y num2
             String[] operacion_cliente=operacion.split(" ");
             int num1= Integer.parseInt(operacion_cliente[0]);
             String op= operacion_cliente[4];
@@ -30,34 +33,29 @@ public class Servidor extends Conexion{
 
             //System.out.println("Cliente me ha dicho: "+num1+op+num2);
 
-            //Calculo del aurea del circulo
-           /* int res= (int) (Math.PI+radio*radio);
-            System.out.println("-El area es: "+res);
-            //mmensaje con el resultado mostrando tanto el radio como el resultado del calculo
-            output_cliente.writeUTF("El area de  circulo con radio "+ radio + " es de : "+res+" cm.");*/
 
             //OPERACIONES:
 
-            if (op == "-"){
+            if (op.equals("-")){
                 int res = num1 - num2;
-                output_cliente.writeInt(Integer.parseInt("El resultado del servidor es: "+res));
+                output_cliente.writeUTF("El resultado del servidor es: "+res);
             }
             if (op == "+"){
                 int res = num1 + num2;
-                output_cliente.writeInt(Integer.parseInt("El resultado del servidor es: "+res));
+                output_cliente.writeUTF("El resultado del servidor es: "+res);
             }
             if (op == "*"){
                 int res = num1 * num2;
-                output_cliente.writeInt(Integer.parseInt("El resultado del servidor es: "+res));
+                output_cliente.writeUTF("El resultado del servidor es: "+res);
             }
             if (op == "/"){
                 int res = num1 / num2;
-                output_cliente.writeInt(Integer.parseInt("El resultado del servidor es: "+res));
+                output_cliente.writeUTF("El resultado del servidor es: "+res);
             }
 
         }catch (Exception e){
             //mensaje de error en caso de fallos en la conexión
-            System.out.println("Errores encontrado en" + e.getMessage());
+            System.out.println("Errores encontrado en: " + e.getMessage());
         }
     }
 }

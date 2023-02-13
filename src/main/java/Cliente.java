@@ -24,7 +24,7 @@ public class Cliente extends Conexion{
             String operacion= scan.next();
             output_cliente.writeUTF(operacion);
 
-            System.out.println("Cliente a dicho "+operacion);
+            //System.out.println("Cliente a dicho "+operacion);
 
             /*----- Lo que recibe el cliente de parte de servidor -----*/
 
@@ -35,7 +35,7 @@ public class Cliente extends Conexion{
 
         }catch (Exception e){
             //mensaje de error en caso de fallos en la conexión
-            System.out.println("Errores encontrado en" + e.getMessage());
+            System.out.println("Errores encontrado en: " + e.getMessage());
         }
     }
 }
