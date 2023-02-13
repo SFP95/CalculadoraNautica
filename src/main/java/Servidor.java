@@ -22,16 +22,17 @@ public class Servidor extends Conexion{
 
             //recogida de datos introducidos por cliente y mostrado en pantalla servidor
             operacion = intput_cliente.readUTF();
-            //System.out.println("-He leido: "+operacion);
+            System.out.println("-He leido: "+operacion+"\n-----------------------------");
 
             //Metemos la recogida en una arrays de tipo string para poder recogerlo y
             // separarlo en distintas variables : num 1, op,  y num2
             String[] operacion_cliente=operacion.split(" ");
+
             int num1= Integer.parseInt(operacion_cliente[0]);
             String op= operacion_cliente[4];
             int num2= Integer.parseInt(operacion_cliente[6]);
 
-            System.out.println("Cliente me ha dicho: "+num1+op+num2);
+            System.out.println("Cliente me ha dicho: "+operacion_cliente);
 
 
             //OPERACIONES:
