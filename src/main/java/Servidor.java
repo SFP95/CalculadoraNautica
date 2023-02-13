@@ -31,14 +31,14 @@ public class Servidor extends Conexion{
             String op= operacion_cliente[4];
             int num2= Integer.parseInt(operacion_cliente[6]);
 
-            //System.out.println("Cliente me ha dicho: "+num1+op+num2);
+            System.out.println("Cliente me ha dicho: "+num1+op+num2);
 
 
             //OPERACIONES:
 
-            if (op.equals("-")){
+          /*  if (op.contains("-")){
                 int res = num1 - num2;
-                output_cliente.writeUTF("El resultado del servidor es: "+res);
+                output_cliente.writeUTF("El resultado del servidor es: "+op);
             }
             if (op == "+"){
                 int res = num1 + num2;
@@ -52,7 +52,7 @@ public class Servidor extends Conexion{
                 int res = num1 / num2;
                 output_cliente.writeUTF("El resultado del servidor es: "+res);
             }
-
+*/
         }catch (Exception e){
             //mensaje de error en caso de fallos en la conexión
             System.out.println("Errores encontrado en: " + e.getMessage());
