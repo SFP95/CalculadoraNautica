@@ -1,9 +1,9 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Servidor extends Conexion{
-    int num;
     String operacion;
 
     public Servidor() throws IOException {
@@ -22,17 +22,19 @@ public class Servidor extends Conexion{
 
             //recogida de datos introducidos por cliente y mostrado en pantalla servidor
             operacion = intput_cliente.readUTF();
-            System.out.println("-He leido: "+operacion+"\n-----------------------------");
+            //System.out.println("-He leido de cliente: "+operacion+"\n-----------");
 
             //Metemos la recogida en una arrays de tipo string para poder recogerlo y
             // separarlo en distintas variables : num 1, op,  y num2
             String[] operacion_cliente=operacion.split(" ");
+           // System.out.println(Arrays.toString(operacion_cliente));
+
 
             int num1= Integer.parseInt(operacion_cliente[0]);
-            String op= operacion_cliente[4];
-            int num2= Integer.parseInt(operacion_cliente[6]);
+            String op= operacion_cliente[1];
+            int num2= Integer.parseInt((operacion_cliente[2]));
 
-            System.out.println("Cliente me ha dicho: "+operacion_cliente);
+            System.out.println("Cliente me ha dicho: "+num1+op+num2);
 
 
             //OPERACIONES:
