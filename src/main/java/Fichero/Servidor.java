@@ -17,7 +17,12 @@ public class Servidor extends Conexion {
             System.out.println("------------\n");
 
             //EJERCICIO:  FICHERO DE CLIENTE Y HACER RESUMEN
-            output_cliente= new DataOutputStream(skCliente.getOutputStream());
+
+
+
+
+
+           /* output_cliente= new DataOutputStream(skCliente.getOutputStream());
             output_cliente.writeUTF("¿Que necesita calcular?");
             intput_cliente=new DataInputStream(skCliente.getInputStream());
 
@@ -36,27 +41,9 @@ public class Servidor extends Conexion {
             int num2= Integer.parseInt((operacion_cliente[2]));
 
             System.out.println("CalculadoraNautica.Cliente me ha dicho: "+num1+op+num2);
+            */
 
 
-            //OPERACIONES:
-
-          /*  if (op.contains("-")){
-                int res = num1 - num2;
-                output_cliente.writeUTF("El resultado del servidor es: "+op);
-            }
-            if (op == "+"){
-                int res = num1 + num2;
-                output_cliente.writeUTF("El resultado del servidor es: "+res);
-            }
-            if (op == "*"){
-                int res = num1 * num2;
-                output_cliente.writeUTF("El resultado del servidor es: "+res);
-            }
-            if (op == "/"){
-                int res = num1 / num2;
-                output_cliente.writeUTF("El resultado del servidor es: "+res);
-            }
-*/
         }catch (Exception e){
             //mensaje de error en caso de fallos en la conexión
             System.out.println("Errores encontrado en: " + e.getMessage());

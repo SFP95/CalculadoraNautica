@@ -2,6 +2,7 @@ package Fichero;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -17,6 +18,9 @@ public class Cliente extends Conexion {
             output_Server = new DataOutputStream(skCliente.getOutputStream());
             output_cliente = new DataOutputStream(skCliente.getOutputStream());
 
+            FileOutputStream fichero= new FileOutputStream("ficheroCliente.txt");
+
+            /*
             //EJERCICIO AREA CIRCULO:
             input_server = new DataInputStream(skCliente.getInputStream());
 
@@ -27,13 +31,14 @@ public class Cliente extends Conexion {
             output_cliente.writeUTF(operacion);
 
             //System.out.println("CalculadoraNautica.Cliente a dicho "+operacion);
-
+            */
             /*----- Lo que recibe el cliente de parte de servidor -----*/
+            /*
+            input_server= new DataInputStream(skCliente.getInputStream());
 
-//            input_server= new DataInputStream(skCliente.getInputStream());
-//
-//            String respuesta= input_server.readUTF();
-//            System.out.println(respuesta);
+            String respuesta= input_server.readUTF();
+            System.out.println(respuesta);
+            */
 
         }catch (Exception e){
             //mensaje de error en caso de fallos en la conexión
