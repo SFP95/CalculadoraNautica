@@ -17,16 +17,18 @@ public class Cliente extends Conexion{
             output_Server = new DataOutputStream(skCliente.getOutputStream());
             output_cliente = new DataOutputStream(skCliente.getOutputStream());
 
-            //EJERCICIO AREA CIRCULO:
+            //EJERCICIO:
+            // Recogida y muertas de mensaje de servidor pidiendo la operación
             input_server = new DataInputStream(skCliente.getInputStream());
 
             String mensajeServer= input_server.readUTF();
             System.out.println(mensajeServer);
 
+            //reecogida de datos por pantalla
             String operacion= scan.next();
             output_cliente.writeUTF(operacion);
 
-            //System.out.println("CalculadoraNautica.Cliente a dicho "+operacion);
+            System.out.println("--------------------\n"+"-Cliente a dicho "+operacion);
 
             /*----- Lo que recibe el cliente de parte de servidor -----*/
 
