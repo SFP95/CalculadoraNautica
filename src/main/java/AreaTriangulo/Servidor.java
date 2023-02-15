@@ -1,8 +1,6 @@
 package AreaTriangulo;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 public class Servidor extends Conexion {
 
@@ -29,7 +27,9 @@ public class Servidor extends Conexion {
 
             intput_cliente=new DataInputStream(skCliente.getInputStream());
             int base = intput_cliente.readInt();
-            System.out.println("CLiente me ha dado la base "+ base);
+            System.out.println("Cliente me ha dado la base "+ base);
+
+            System.out.println("******");
 
             //para altura:
 
@@ -38,17 +38,18 @@ public class Servidor extends Conexion {
 
             intput_cliente=new DataInputStream(skCliente.getInputStream());
             int altura = intput_cliente.readInt();
-            System.out.println("CLiente me ha dado la altura "+ altura);
+            System.out.println("Cliente me ha dado la altura "+ altura);
 
 
             System.out.println("-------\n");
-            System.out.println("Cliente me ha dicho qye calcule: "+base+" y "+altura);
+            System.out.println("Cliente me ha dicho que calcule: "+base+" y "+altura);
 
             //operacion de la base por al altura
+            System.out.println("******");
 
-             int operacion= base*altura;
+            int operacion= base*altura;
 
-             System.out.println("El resultado es: "+ operacion);
+            System.out.println("El resultado es: "+ operacion);
 
            //mandamos la respuetsa a cliente
 
