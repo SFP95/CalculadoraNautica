@@ -1,13 +1,14 @@
+package Fichero;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 
-public class Servidor extends Conexion{
+public class Servidor extends Conexion {
     String operacion;
 
     public Servidor() throws IOException {
-        super("Servidor");
+        super("CalculadoraNautica.Servidor");
     }
     public void initServidor(){
         try {
@@ -34,7 +35,7 @@ public class Servidor extends Conexion{
             String op= operacion_cliente[1];
             int num2= Integer.parseInt((operacion_cliente[2]));
 
-            System.out.println("Cliente me ha dicho: "+num1+op+num2);
+            System.out.println("CalculadoraNautica.Cliente me ha dicho: "+num1+op+num2);
 
 
             //OPERACIONES:

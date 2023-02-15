@@ -1,3 +1,5 @@
+package CalculadoraNautica;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -24,7 +26,7 @@ public class Cliente extends Conexion{
             String operacion= scan.next();
             output_cliente.writeUTF(operacion);
 
-            //System.out.println("Cliente a dicho "+operacion);
+            //System.out.println("CalculadoraNautica.Cliente a dicho "+operacion);
 
             /*----- Lo que recibe el cliente de parte de servidor -----*/
 
