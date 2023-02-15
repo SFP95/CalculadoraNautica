@@ -18,7 +18,7 @@ public class Cliente extends Conexion {
             output_cliente = new DataOutputStream(skCliente.getOutputStream());
 
             //EJERCICIO Triangulo:
-            System.out.println("\n-------------------------"+"CALCULAR BASE Y ALTURA DE UN TRIANGULO"+"\n-------------------------");
+            System.out.println("\n-------------------------"+"\nCALCULAR BASE Y ALTURA DE UN TRIANGULO"+"\n-------------------------");
 
             //Escribimos el mensaje de la pregunta de la base del triengulo al cliente desde el servidor
             input_server = new DataInputStream(skCliente.getInputStream());

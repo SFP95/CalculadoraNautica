@@ -7,7 +7,7 @@ import java.io.IOException;
 public class Servidor extends Conexion {
 
     public Servidor() throws IOException {
-        super("CalculadoraNautica.Servidor");
+        super("Servidor");
     }
     public void initServidor(){
         try {
@@ -15,7 +15,7 @@ public class Servidor extends Conexion {
             skCliente =skServidor.accept();
 
             //mensase de comprovación de conexción con el  servidor, mostrando la dirección IP y el host
-            System.out.println("- Conexión aceptada de : "+ skCliente.getInetAddress().getHostName()+"\n------------\n");
+            System.out.println("\t- Conexión aceptada de : "+ skCliente.getInetAddress().getHostName()+"\n\t------------\n");
 
             //EJERCICIO:
 
@@ -26,16 +26,22 @@ public class Servidor extends Conexion {
             //para base:
             output_cliente= new DataOutputStream(skCliente.getOutputStream());
             output_cliente.writeUTF("Dime la base del triangulo");
+
             intput_cliente=new DataInputStream(skCliente.getInputStream());
             int base = intput_cliente.readInt();
+            System.out.println("CLiente me ha dado la base "+ base);
 
             //para altura:
 
             output_cliente= new DataOutputStream(skCliente.getOutputStream());
             output_cliente.writeUTF("Dime la altura del triangulo:");
+
             intput_cliente=new DataInputStream(skCliente.getInputStream());
             int altura = intput_cliente.readInt();
+            System.out.println("CLiente me ha dado la altura "+ altura);
 
+
+            System.out.println("-------\n");
             System.out.println("Cliente me ha dicho qye calcule: "+base+" y "+altura);
 
             //operacion de la base por al altura
