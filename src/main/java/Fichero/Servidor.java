@@ -8,7 +8,7 @@ public class Servidor extends Conexion {
     String operacion;
 
     public Servidor() throws IOException {
-        super("CalculadoraNautica.Servidor");
+        super("Servidor");
     }
     public void initServidor(){
         try {
@@ -16,7 +16,7 @@ public class Servidor extends Conexion {
             System.out.println("- Conexión aceptada de : "+ skCliente.getInetAddress().getHostName());
             System.out.println("------------\n");
 
-            //EJERCICIO:
+            //EJERCICIO:  FICHERO DE CLIENTE Y HACER RESUMEN
             output_cliente= new DataOutputStream(skCliente.getOutputStream());
             output_cliente.writeUTF("¿Que necesita calcular?");
             intput_cliente=new DataInputStream(skCliente.getInputStream());

@@ -9,7 +9,7 @@ public class Cliente extends Conexion {
     public Scanner scan=new Scanner(System.in);
 
     public Cliente() throws IOException {
-        super("Clienta");
+        super("Cliente");
     }
     public  void  initCLiente(){
         try {
