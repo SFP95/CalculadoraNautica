@@ -37,7 +37,7 @@ public class Servidor extends Conexion{
 
             //EL PROBLEMA RESIDE AQUI:
             //meterlos las posiciones deseadas en el array para poder realizar la operacion
-            String[] op = operacion_cliente;
+            /*int[] op = operacion_cliente;
             int num1= Integer.parseInt(op[0]);
             System.out.println(num1);
            /* int num2= op;
