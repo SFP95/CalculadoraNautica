@@ -1,12 +1,9 @@
 package Fichero;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.security.MessageDigest;
 
 public class Servidor extends Conexion {
-    String operacion;
-
     public Servidor() throws IOException {
         super("Servidor");
     }
@@ -18,30 +15,33 @@ public class Servidor extends Conexion {
 
             //EJERCICIO:  FICHERO DE CLIENTE Y HACER RESUMEN
 
+            System.out.println("- Recibiendo el fichero del cliente");
 
-
-
-
-           /* output_cliente= new DataOutputStream(skCliente.getOutputStream());
-            output_cliente.writeUTF("¿Que necesita calcular?");
+            //recogida del fichero del cliente
             intput_cliente=new DataInputStream(skCliente.getInputStream());
+            String ficheroCliente= intput_cliente.readUTF();
+            System.out.println("---- FICHERO LEIDO:\n"+ficheroCliente);
 
-            //recogida de datos introducidos por cliente y mostrado en pantalla servidor
-            operacion = intput_cliente.readUTF();
-            //System.out.println("-He leido de cliente: "+operacion+"\n-----------");
+            //hacemos el resumen del fichero
+            //transformamos el mensaje del cliente para podrer resumirlo
 
-            //Metemos la recogida en una arrays de tipo string para poder recogerlo y
-            // separarlo en distintas variables : num 1, op,  y num2
-            String[] operacion_cliente=operacion.split(" ");
-           // System.out.println(Arrays.toString(operacion_cliente));
+            FileOutputStream fichero= new FileOutputStream(ficheroCliente);
+            ObjectOutputStream fichOut= new ObjectOutputStream(fichero);
+            MessageDigest md= MessageDigest.getInstance("SHA");
 
+            byte texto[]= fichero.toString().getBytes(); //resumimos
+            md.update(texto); // actualizamos
+            byte resumen[]=md.digest(); //calculamos el resument
+            //escribimos
+            fichOut.writeObject(texto);
+            fichOut.writeObject(resumen);
+            //cerramos
+            fichOut.close();
+            fichero.close();
 
-            int num1= Integer.parseInt(operacion_cliente[0]);
-            String op= operacion_cliente[1];
-            int num2= Integer.parseInt((operacion_cliente[2]));
-
-            System.out.println("CalculadoraNautica.Cliente me ha dicho: "+num1+op+num2);
-            */
+            //mandamos el resumen al cliente
+            System.out.println("- Mandando resumen al servidor");
+            output_cliente.writeUTF(fichOut.toString());
 
 
         }catch (Exception e){

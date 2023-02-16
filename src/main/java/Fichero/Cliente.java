@@ -1,9 +1,7 @@
 package Fichero;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.security.MessageDigest;
 import java.util.Scanner;
 
 public class Cliente extends Conexion {
@@ -18,27 +16,45 @@ public class Cliente extends Conexion {
             output_Server = new DataOutputStream(skCliente.getOutputStream());
             output_cliente = new DataOutputStream(skCliente.getOutputStream());
 
+            /*El cliente tiene un fichero, le manda un resumen al servidor,
+            este mismo hace un resumen si comprueba si coincide con el resumen recibido.
+             */
+            //seleccionamos el fichero .txt que queremos mandar al servidor
             FileOutputStream fichero= new FileOutputStream("ficheroCliente.txt");
 
-            /*
-            //EJERCICIO AREA CIRCULO:
-            input_server = new DataInputStream(skCliente.getInputStream());
+            //lo trasformamos en un objeto output
+            ObjectOutputStream fichOut= new ObjectOutputStream(fichero);
 
-            String mensajeServer= input_server.readUTF();
-            System.out.println(mensajeServer);
-
-            String operacion= scan.next();
-            output_cliente.writeUTF(operacion);
-
-            //System.out.println("CalculadoraNautica.Cliente a dicho "+operacion);
-            */
-            /*----- Lo que recibe el cliente de parte de servidor -----*/
-            /*
+            //creamos el objeto de entrada del servidor
             input_server= new DataInputStream(skCliente.getInputStream());
 
-            String respuesta= input_server.readUTF();
-            System.out.println(respuesta);
-            */
+            //mandamos el objeto output al servidor
+            System.out.println("-- FicheroCliente.txt enviado al Servidor --");
+            output_cliente.writeUTF(fichOut.toString());
+
+            //creamos un resumen del fichero par aluego contrartar con el del servidor
+            MessageDigest md= MessageDigest.getInstance("SHA");
+            byte texto[]=fichero.toString().getBytes(); //resumimos
+            md.update(texto); //actualizamos
+            byte res[]=md.digest(); //calculamos el resumen
+            //escribimos
+            fichOut.writeObject(texto);
+            fichOut.writeObject(res);
+            //cerramos
+            fichOut.close();
+            fichero.close();
+
+            /*----- Lo que recibe el cliente de parte de servidor -----*/
+            System.out.println("---------\n"+" - Recibimos el fichero resumido por el servidor:");
+
+            input_server= new DataInputStream(skCliente.getInputStream());
+            String resumen = input_server.readUTF();
+
+             if (fichOut.toString() == resumen){
+                 System.out.println("\t¡¡ EL RESUMEN COHINCIDE !!\n");
+                 System.out.println("RESUMEN:\n"+resumen);
+             }
+
 
         }catch (Exception e){
             //mensaje de error en caso de fallos en la conexión
