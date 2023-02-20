@@ -29,8 +29,8 @@ public class Cliente extends Conexion {
             input_server= new DataInputStream(skCliente.getInputStream());
 
             //mandamos el objeto output al servidor
-            System.out.println("-- FicheroCliente.txt enviado al Servidor --");
-            output_cliente.writeUTF(fichOut.toString());
+            System.out.println("\t-- FicheroCliente.txt enviado al Servidor --");
+            output_Server.writeUTF(fichOut.toString());
 
             //creamos un resumen del fichero par aluego contrartar con el del servidor
             MessageDigest md= MessageDigest.getInstance("SHA");
@@ -45,7 +45,7 @@ public class Cliente extends Conexion {
             fichero.close();
 
             /*----- Lo que recibe el cliente de parte de servidor -----*/
-            System.out.println("---------\n"+" - Recibimos el fichero resumido por el servidor:");
+            System.out.println("----------\n"+" - Recibimos el fichero resumido por el servidor:");
 
             input_server= new DataInputStream(skCliente.getInputStream());
             String resumen = input_server.readUTF();
