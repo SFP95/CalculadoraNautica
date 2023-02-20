@@ -30,45 +30,38 @@ public class Servidor extends Conexion{
             System.out.println("-He leido de cliente: "+operacion+"\n-----------");
 
             //Metemos la recogida en una arrays para separarlo en distintas variables : num 1, op,  y num2
-            String[] operacion_cliente=operacion.split("_");
+            String[] operacion_cliente=operacion.split("[-+/*]");
 
             //Menaje de probación del array
             System.out.println("-IMPRESION ARRAY: "+Arrays.toString(operacion_cliente)+"\n-----------");
 
-            //EL PROBLEMA RESIDE AQUI:
-            //meterlos las posiciones deseadas en el array para poder realizar la operacion
-            /*int[] op = operacion_cliente;
-            int num1= Integer.parseInt(op[0]);
-            System.out.println(num1);
-           /* int num2= op;
-            System.out.println(num2);
-            /*String op= operacion_cliente[1];
-            System.out.println(op);
-            ;*/
 
-            //mensaje de comprobación para saber si se han cogido bien los datos
-            //System.out.println("CalculadoraNautica.Cliente me ha dicho: "+num1+op+num2);
+            //meterlos las posiciones deseadas en el array para poder realizar la operacion
+            int num1= Integer.parseInt(operacion_cliente[0]);
+            System.out.println("num1: "+num1);
+            int num2= Integer.parseInt(operacion_cliente[1]);
+            System.out.println("num2: "+num2);
 
 
             //OPERACIONES:
 
-          /*  if (op.contains("-")){
+            if (operacion.contains("-")){
                 int res = num1 - num2;
-                output_cliente.writeUTF("El resultado del servidor es: "+op);
+                output_cliente.writeUTF("El resultado del servidor es: "+res);
             }
-            if (op == "+"){
+            if (operacion.contains("+")){
                 int res = num1 + num2;
                 output_cliente.writeUTF("El resultado del servidor es: "+res);
             }
-            if (op == "*"){
+            if (operacion.contains("*")){
                 int res = num1 * num2;
                 output_cliente.writeUTF("El resultado del servidor es: "+res);
             }
-            if (op == "/"){
+            if (operacion.contains("/")){
                 int res = num1 / num2;
                 output_cliente.writeUTF("El resultado del servidor es: "+res);
             }
-*/
+
         }catch (Exception e){
             //mensaje de error en caso de fallos en la conexión
             System.out.println("Errores encontrado en: " + e.getMessage());

@@ -32,10 +32,10 @@ public class Cliente extends Conexion{
 
             /*----- Lo que recibe el cliente de parte de servidor -----*/
 
-//            input_server= new DataInputStream(skCliente.getInputStream());
-//
-//            String respuesta= input_server.readUTF();
-//            System.out.println(respuesta);
+            input_server= new DataInputStream(skCliente.getInputStream());
+
+            String respuesta= input_server.readUTF();
+            System.out.println(respuesta);
 
         }catch (Exception e){
             //mensaje de error en caso de fallos en la conexión
