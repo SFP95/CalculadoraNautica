@@ -20,13 +20,13 @@ public class Cliente extends Conexion {
             este mismo hace un resumen si comprueba si coincide con el resumen recibido.
              */
             //seleccionamos el fichero .txt que queremos mandar al servidor
-            FileOutputStream fichero= new FileOutputStream("src/main/ficheroCliente.txt");
+            FileOutputStream fichero= new FileOutputStream("src/main/java/Fichero/ficheroCliente.txt");
 
             //lo trasformamos en un objeto output
             ObjectOutputStream fichOut= new ObjectOutputStream(fichero);
 
-            //creamos el objeto de entrada del servidor
-            input_server= new DataInputStream(skCliente.getInputStream());
+           /* //creamos el objeto de entrada del servidor
+            input_server= new DataInputStream(skCliente.getInputStream());*/
 
             //mandamos el objeto output al servidor
             System.out.println("\t-- FicheroCliente.txt enviado al Servidor --"); //no lee el fichero
@@ -34,12 +34,15 @@ public class Cliente extends Conexion {
 
             //creamos un resumen del fichero par aluego contrartar con el del servidor
             MessageDigest md= MessageDigest.getInstance("SHA");
+
             byte texto[]=fichero.toString().getBytes(); //resumimos
             md.update(texto); //actualizamos
             byte res[]=md.digest(); //calculamos el resumen
+
             //escribimos
             fichOut.writeObject(texto);
             fichOut.writeObject(res);
+
             //cerramos
             fichOut.close();
             fichero.close();
@@ -50,12 +53,9 @@ public class Cliente extends Conexion {
             input_server= new DataInputStream(skCliente.getInputStream());
             String resumen = input_server.readUTF();
 
-             if (fichOut.toString() == resumen){
+             if (fichOut.toString().equals(resumen)){
                  System.out.println("\t¡¡ EL RESUMEN COHINCIDE !!\n");
-                 System.out.println("RESUMEN:\n"+resumen);
              }
-
-
         }catch (Exception e){
             //mensaje de error en caso de fallos en la conexión
             System.out.println("Errores encontrado en: " + e.getMessage());

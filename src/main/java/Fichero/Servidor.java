@@ -20,7 +20,7 @@ public class Servidor extends Conexion {
             //recogida del fichero del cliente
             intput_cliente=new DataInputStream(skCliente.getInputStream());
             String ficheroCliente= intput_cliente.readUTF();
-            System.out.println("---- FICHERO LEIDO:\n\t"+ficheroCliente.toString());
+            System.out.println("---- FICHERO LEIDO:\n\t"+ficheroCliente);
 
             //hacemos el resumen del fichero
             //transformamos el mensaje del cliente para podrer resumirlo
@@ -40,6 +40,7 @@ public class Servidor extends Conexion {
             fichero.close();
 
             //mandamos el resumen al cliente
+            output_cliente = new DataOutputStream(skCliente.getOutputStream());
             System.out.println("- Mandando resumen al servidor"); //error aqui
             output_cliente.writeUTF(fichOut.toString());
 
