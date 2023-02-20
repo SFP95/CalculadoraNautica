@@ -20,7 +20,7 @@ public class Cliente extends Conexion {
             este mismo hace un resumen si comprueba si coincide con el resumen recibido.
              */
             //seleccionamos el fichero .txt que queremos mandar al servidor
-            FileOutputStream fichero= new FileOutputStream("ficheroCliente.txt");
+            FileOutputStream fichero= new FileOutputStream("src/main/ficheroCliente.txt");
 
             //lo trasformamos en un objeto output
             ObjectOutputStream fichOut= new ObjectOutputStream(fichero);
@@ -29,7 +29,7 @@ public class Cliente extends Conexion {
             input_server= new DataInputStream(skCliente.getInputStream());
 
             //mandamos el objeto output al servidor
-            System.out.println("\t-- FicheroCliente.txt enviado al Servidor --");
+            System.out.println("\t-- FicheroCliente.txt enviado al Servidor --"); //no lee el fichero
             output_Server.writeUTF(fichOut.toString());
 
             //creamos un resumen del fichero par aluego contrartar con el del servidor
