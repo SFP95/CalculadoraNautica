@@ -46,7 +46,7 @@ public class Servidor extends Conexion{
             System.out.println("num2: "+num2);
 
 
-            //OPERACIONES:
+            //OPERACIONES:  //tratas de hacerlo con Case: y  no ifs
 
             if (operacion.contains("-")){
                 int res = num1 - num2;
