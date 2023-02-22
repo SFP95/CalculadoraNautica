@@ -33,7 +33,7 @@ public class Servidor extends Conexion{
             System.out.println("-He leido de cliente: "+operacion+"\n-----------");
 
             //Metemos la recogida en una arrays para separarlo en distintas variables : num 1, op,  y num2
-            String[] operacion_cliente=operacion.split("[-+/*]");
+            String[] operacion_cliente=operacion.split("[-+/*()]");
 
             //Menaje de probación del array
             System.out.println("-IMPRESION ARRAY: "+Arrays.toString(operacion_cliente)+"\n-----------");
