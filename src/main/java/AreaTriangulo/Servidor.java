@@ -20,7 +20,7 @@ public class Servidor extends Conexion {
             //pedimos al cliente que nos de el primer dato en este caso : la base del triángulo
 
             //recogida de datos introducidos por cliente y mostrado en pantalla servidor
-            while (!skCliente.isClosed()){
+            while (skCliente.isConnected()){
                 //para base:
                 output_cliente= new DataOutputStream(skCliente.getOutputStream());
                 output_cliente.writeUTF("Dime la base del triangulo");
