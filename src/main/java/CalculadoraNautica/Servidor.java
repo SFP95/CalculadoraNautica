@@ -12,6 +12,7 @@ public class Servidor extends Conexion{
         super("Servidor");
     }
     public void initServidor(){
+
         try {
             skCliente =skServidor.accept(); // que queda a la espera de recibir la petición de conexión
             System.out.println("\t- Conexión aceptada de : "+ skCliente.getInetAddress().getHostName());
@@ -25,6 +26,8 @@ public class Servidor extends Conexion{
             //recogida de datos introducidos por cliente y mostrado en pantalla servidor
             intput_cliente=new DataInputStream(skCliente.getInputStream());
             operacion = intput_cliente.readUTF();
+
+            // para  while : intput_cliente = respuesta.ignoreCase(salir);
 
             //mensaje de prueba para comprobar que se recibe el operando de cliente de tipo string
             System.out.println("-He leido de cliente: "+operacion+"\n-----------");
