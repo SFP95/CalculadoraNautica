@@ -42,9 +42,9 @@ public class Servidor extends Conexion{
             //meterlos las posiciones deseadas en el array para poder realizar la operacion
            //DEBE SER DOUBLE Y NO INT
 
-            double num1= Integer.parseInt(operacion_cliente[0]);
+            double num1= Double.parseDouble(operacion_cliente[0]);
             System.out.println("num1: "+num1);
-            double num2= Integer.parseInt(operacion_cliente[1]);
+            double num2= Double.parseDouble(operacion_cliente[1]);
             System.out.println("num2: "+num2);
 
 
