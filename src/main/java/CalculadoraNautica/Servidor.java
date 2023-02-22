@@ -42,28 +42,28 @@ public class Servidor extends Conexion{
             //meterlos las posiciones deseadas en el array para poder realizar la operacion
            //DEBE SER DOUBLE Y NO INT
 
-            int num1= Integer.parseInt(operacion_cliente[0]);
+            double num1= Integer.parseInt(operacion_cliente[0]);
             System.out.println("num1: "+num1);
-            int num2= Integer.parseInt(operacion_cliente[1]);
+            double num2= Integer.parseInt(operacion_cliente[1]);
             System.out.println("num2: "+num2);
 
 
             //OPERACIONES:  //tratas de hacerlo con Case: y  no ifs
 
             if (operacion.contains("-")){
-                int res = num1 - num2;
+                double res = num1 - num2;
                 output_cliente.writeUTF("El resultado del servidor es: "+res);
             }
             if (operacion.contains("+")){
-                int res = num1 + num2;
+                double res = num1 + num2;
                 output_cliente.writeUTF("El resultado del servidor es: "+res);
             }
             if (operacion.contains("*")){
-                int res = num1 * num2;
+                double res = num1 * num2;
                 output_cliente.writeUTF("El resultado del servidor es: "+res);
             }
             if (operacion.contains("/")){
-                int res = num1 / num2;
+                double res = num1 / num2;
                 output_cliente.writeUTF("El resultado del servidor es: "+res);
             }
 
