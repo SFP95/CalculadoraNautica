@@ -34,12 +34,21 @@ public class Cliente extends Conexion {
             System.out.println("Enviamos un con nombre :"+ fichero.getName());
             System.out.println("Con un tamaño de :"+ tamFichero+"\n-----------------------");
 
-            FileOutputStream fichOut = new FileOutputStream(fichero);
-            ObjectOutputStream obFichOut = new ObjectOutputStream(skCliente.getOutputStream());
+            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(fichero));
+            BufferedOutputStream bos = new BufferedOutputStream(skCliente.getOutputStream());
+
+            System.out.println(fichero);
+            output_Server.writeUTF(fichero.toString());
+           /* ObjectOutputStream obFichOut = new ObjectOutputStream(skCliente.getOutputStream());
             Object mensajeFich = fichOut.toString();
             String leeFich= (String) mensajeFich;
-            System.out.println("Leo fichero:\n"+leeFich);
 
+            System.out.println("Leo fichero:\n"+leeFich);*/
+
+
+
+
+/*
             //mandamos a servidor:
             output_Server.writeUTF(leeFich);
             System.out.println("Fichero enviado");

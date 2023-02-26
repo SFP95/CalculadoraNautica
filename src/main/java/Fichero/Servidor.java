@@ -5,8 +5,9 @@ import java.security.MessageDigest;
 import java.util.Locale;
 
 public class Servidor extends Conexion {
-    byte[] recibiendoFichero;
+    byte[] datosFichero;
     int tamFichero;
+    String fichero;
     String rutaFich="/home/alumno/IdeaProjects/CalculadoraNautica/src/main/java/Fichero/ficheroCliente.txt";
 
     public Servidor() throws IOException {
@@ -21,6 +22,21 @@ public class Servidor extends Conexion {
             //EJERCICIO:  FICHERO DE CLIENTE Y HACER RESUMEN
             output_cliente =new DataOutputStream(skCliente.getOutputStream());
             input_cliente =new DataInputStream(skCliente.getInputStream());
+            BufferedInputStream bis = new BufferedInputStream(skCliente.getInputStream());
+
+            fichero = input_cliente.readUTF();
+            tamFichero = input_cliente.readInt();
+            datosFichero = new byte[tamFichero];
+
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(fichero));
+            while ((tamFichero = bis.read(datosFichero)) != -1){
+                bos.write(datosFichero,0,tamFichero);
+            }
+            System.out.println("Leyendo fichero: \n"+fichero);
+
+
+/*
+
             FileInputStream fichero = new FileInputStream(rutaFich);
 
             //leemos mensaje entrada cliente
