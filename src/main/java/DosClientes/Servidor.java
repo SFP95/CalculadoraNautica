@@ -68,19 +68,19 @@ public class Servidor extends Conexion {
 
 // creación del hilo users
 class UserThread extends Thread{
-    private  Socket soCliente;                  // socket cliente
+    private  Socket soket;                  // socket cliente
     private Servidor mainServer;                // el servidor
     private DataOutputStream dataOutput;        // objeto streams salida
     private ObjectOutputStream objetOut;          // objeto streams entrada
 
     //constructor de la clase
     public UserThread(Socket soCliente, Servidor mainServer){
-        this.soCliente = soCliente;
+        this.soket = soCliente;
         this.mainServer = mainServer;
 
         try {
-            this.dataOutput = new DataOutputStream(this.soCliente.getOutputStream());
-            this.objetOut = new ObjectOutputStream(this.soCliente.getOutputStream());
+            this.dataOutput = new DataOutputStream(this.soket.getOutputStream());
+            this.objetOut = new ObjectOutputStream(this.soket.getOutputStream());
         }catch (IOException e){
             System.out.println("Error en el Hilo de cliente: "+e.getMessage());
         }
@@ -119,7 +119,7 @@ class UserThread extends Thread{
     @Override
     public void run () {
         try {
-            DataInputStream dataInput = new DataInputStream(this.soCliente.getInputStream());
+            DataInputStream dataInput = new DataInputStream(this.soket.getInputStream());
             ObjectInputStream objInput = new ObjectInputStream(dataInput);
             printUsers();
             String userName = "";
@@ -142,7 +142,7 @@ class UserThread extends Thread{
             }while (!userMessaje.equals("exit"));
 
             mainServer.removeUserThread(userName,this);
-            soCliente.close();
+            soket.close();
 
             serverMessaje=userName+" se ha ido";
             mainServer.broadcastMessaje(serverMessaje,this);
