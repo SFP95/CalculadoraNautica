@@ -18,8 +18,8 @@ public class Servidor extends Conexion {
             System.out.println("- Recibiendo el fichero del cliente");
 
             //recogida del fichero del cliente
-            intput_cliente=new DataInputStream(skCliente.getInputStream());
-            ObjectInputStream fichIn= new ObjectInputStream(intput_cliente);
+            input_cliente=new DataInputStream(skCliente.getInputStream());
+            ObjectInputStream fichIn= new ObjectInputStream(input_cliente);
             Object mensaje = fichIn.readObject();
             System.out.println("---- FICHERO LEIDO:\n\t"+mensaje);
 

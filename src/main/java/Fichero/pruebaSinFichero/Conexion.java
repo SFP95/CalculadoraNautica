@@ -1,4 +1,4 @@
-package Fichero;
+package Fichero.pruebaSinFichero;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -13,6 +13,7 @@ public class Conexion {
     protected Socket skCliente;
     protected DataOutputStream output_Server, output_cliente;
     DataInputStream input_cliente, input_server;
+    protected String mensajeRecibido;
 
     public Conexion(String tipo) throws IOException {
         if (tipo.equalsIgnoreCase("servidor")){
