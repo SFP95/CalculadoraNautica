@@ -5,7 +5,8 @@ import java.security.MessageDigest;
 import java.util.Scanner;
 
 public class Cliente extends Conexion {
-    System nombreFichero;
+    String rutaFich="/home/alumno/IdeaProjects/CalculadoraNautica/src/main/java/Fichero/ficheroCliente.txt";
+
     //public Scanner scan=new Scanner(System.in);
 
     public Cliente() throws IOException {
@@ -24,7 +25,7 @@ public class Cliente extends Conexion {
              */
 
             //Elegimos el fichero que queremos enviar y lo metemos en una variable
-            File fichero = new File("/home/alumno/IdeaProjects/CalculadoraNautica/src/main/java/Fichero/ficheroCliente.txt");
+            File fichero = new File(rutaFich);
 
             //Obtenemos el tamaño del fichero
             int tamFichero= (int) fichero.length();
@@ -33,28 +34,18 @@ public class Cliente extends Conexion {
             System.out.println("Enviamos un con nombre :"+ fichero.getName());
             System.out.println("Con un tamaño de :"+ tamFichero+"\n-----------------------");
 
-            //leemos el fichero creado un flujo de entrada en bytes
-            FileInputStream ficheroInput = new FileInputStream(fichero);
-            BufferedInputStream bis = new BufferedInputStream(ficheroInput);
+            FileOutputStream fichOut = new FileOutputStream(fichero);
+            ObjectOutputStream obFichOut = new ObjectOutputStream(skCliente.getOutputStream());
+            Object mensajeFich = fichOut.toString();
+            String leeFich= (String) mensajeFich;
+            System.out.println("Leo fichero:\n"+leeFich);
 
-            //creamo flujo de salida para enviar los datos del fichero al servidor
-            BufferedOutputStream bos = new BufferedOutputStream(skCliente.getOutputStream());
-
-            //creamos array con el tamaño del fichero
-            byte[] datosFichero = new byte[tamFichero];
-
-            //leemos e introducimos el array de bytes
-            bis.read(datosFichero);
-
-            //realizamos el envio de los bytes del fichero
-            for (int i=0; i<datosFichero.length;i++){
-                bos.write(datosFichero[i]);
-            }
+            //mandamos a servidor:
+            output_Server.writeUTF(leeFich);
             System.out.println("Fichero enviado");
 
-            //Cerramos los flujos y sockets
-            bis.close();
-            bos.close();
+            //Cerramos
+
             skCliente.close();
 
 

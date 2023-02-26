@@ -7,7 +7,8 @@ import java.util.Locale;
 public class Servidor extends Conexion {
     byte[] recibiendoFichero;
     int tamFichero;
-    String fichero;
+    String rutaFich="/home/alumno/IdeaProjects/CalculadoraNautica/src/main/java/Fichero/ficheroCliente.txt";
+
     public Servidor() throws IOException {
         super("Servidor");
     }
@@ -20,7 +21,27 @@ public class Servidor extends Conexion {
             //EJERCICIO:  FICHERO DE CLIENTE Y HACER RESUMEN
             output_cliente =new DataOutputStream(skCliente.getOutputStream());
             input_cliente =new DataInputStream(skCliente.getInputStream());
+            FileInputStream fichero = new FileInputStream(rutaFich);
 
+            //leemos mensaje entrada cliente
+            ObjectInputStream fichInput = new ObjectInputStream(skCliente.getInputStream());
+            Object mensajeFichero = fichInput.readObject();
+
+            //1a Lectua fichero:
+            String datos = (String) mensajeFichero;
+            System.out.println("Datos: " + datos);
+
+            //Resumen fichero:
+            mensajeFichero = fichInput.readObject();
+            byte resumenOriginal[] = (byte[]) mensajeFichero;
+
+            //comparamos el resumen con el del cliente:
+            if (fichInput.equals(resumenOriginal)){
+                System.out.println("LOS RESUMENES COINCIDEN");
+                output_cliente.writeUTF("LOS RESUMENES COINCIDEN");
+            }
+
+            /*
             //recibimos el fichero de cliente: y lo leemos en formato texto y numeríco
             input_cliente=new DataInputStream(skCliente.getInputStream());
 
@@ -50,6 +71,9 @@ public class Servidor extends Conexion {
             bos.flush();
             bis.close();
             bos.close();
+
+
+             */
             skServidor.close();
 
             System.out.println("-- CERRAMOS CONEXION --");
