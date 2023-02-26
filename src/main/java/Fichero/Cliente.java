@@ -5,7 +5,8 @@ import java.security.MessageDigest;
 import java.util.Scanner;
 
 public class Cliente extends Conexion {
-    public Scanner scan=new Scanner(System.in);
+    System nombreFichero;
+    //public Scanner scan=new Scanner(System.in);
 
     public Cliente() throws IOException {
         super("Cliente");
@@ -14,52 +15,59 @@ public class Cliente extends Conexion {
         try {
             // salida de servidor y recogida de datos
             output_Server = new DataOutputStream(skCliente.getOutputStream());
-            output_cliente = new DataOutputStream(skCliente.getOutputStream());
+            input_server = new DataInputStream(skCliente.getInputStream());
 
             //EJERCICIO:
+
             /*El cliente tiene un fichero, le manda un resumen al servidor,
             este mismo hace un resumen si comprueba si coincide con el resumen recibido.
              */
 
-            //seleccionamos el fichero .txt que queremos mandar al servidor
-            FileOutputStream fichero= new FileOutputStream("src/main/java/Fichero/ficheroCliente.txt");
+            //Elegimos el fichero que queremos enviar y lo metemos en una variable
+            File fichero = new File("/home/alumno/IdeaProjects/CalculadoraNautica/src/main/java/Fichero/ficheroCliente.txt");
 
-            //lo trasformamos en un objeto output
-            ObjectOutputStream fichOut= new ObjectOutputStream(fichero);
+            //Obtenemos el tamaño del fichero
+            int tamFichero= (int) fichero.length();
 
-           /* //creamos el objeto de entrada del servidor
-            input_server= new DataInputStream(skCliente.getInputStream());*/
+            //leemos el nombre y tmaño del fichero por pantalla
+            System.out.println("Enviamos un con nombre :"+ fichero.getName());
+            System.out.println("Con un tamaño de :"+ tamFichero+"\n-----------------------");
 
-            //mandamos el objeto output al servidor
-            System.out.println("\t-- FicheroCliente.txt enviado al Servidor --"); //no lee el fichero
-            output_Server.writeUTF(fichOut.toString());
+            //leemos el fichero creado un flujo de entrada en bytes
+            FileInputStream ficheroInput = new FileInputStream(fichero);
+            BufferedInputStream bis = new BufferedInputStream(ficheroInput);
 
-            //creamos un resumen del fichero par aluego contrartar con el del servidor
-            MessageDigest md= MessageDigest.getInstance("SHA");
+            //creamo flujo de salida para enviar los datos del fichero al servidor
+            BufferedOutputStream bos = new BufferedOutputStream(skCliente.getOutputStream());
 
-            byte texto[]=fichero.toString().getBytes(); //resumimos
-            md.update(texto); //actualizamos
-            byte res[]=md.digest(); //calculamos el resumen
+            //creamos array con el tamaño del fichero
+            byte[] datosFichero = new byte[tamFichero];
 
-            //escribimos
-            fichOut.writeObject(texto);
-            fichOut.writeObject(res);
+            //leemos e introducimos el array de bytes
+            bis.read(datosFichero);
 
-            //cerramos
-            fichOut.close();
-            fichero.close();
+            //realizamos el envio de los bytes del fichero
+            for (int i=0; i<datosFichero.length;i++){
+                bos.write(datosFichero[i]);
+            }
+            System.out.println("Fichero enviado");
+
+            //Cerramos los flujos y sockets
+            bis.close();
+            bos.close();
+            skCliente.close();
+
 
             /*----- Lo que recibe el cliente de parte de servidor -----*/
-            System.out.println("----------\n"+" - Recibimos el fichero resumido por el servidor:");
+            //System.out.println("----------\n"+" - Recibimos el fichero resumido por el servidor:");
 
-            input_server= new DataInputStream(skCliente.getInputStream());
-            String resumen = input_server.readUTF();
+           /* input_server= new DataInputStream(skCliente.getInputStream());
+            String resumen = input_server.readUTF();*7
 
-             if (fichOut.toString().equals(resumen)){
+             /*if (fichOut.toString().equals(resumen)){
                  System.out.println("\t¡¡ EL RESUMEN COHINCIDE !!\n");
-             }
+             }*/
         }catch (Exception e){
-            //mensaje de error en caso de fallos en la conexión
             System.out.println("Errores encontrado en: " + e.getMessage());
         }
     }

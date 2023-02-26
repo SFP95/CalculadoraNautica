@@ -22,7 +22,9 @@ public class Servidor extends Conexion {
             input_cliente =new DataInputStream(skCliente.getInputStream());
 
             //recibimos el fichero de cliente: y lo leemos en formato texto y numeríco
-            fichero =input_cliente.readUTF().toString();
+            input_cliente=new DataInputStream(skCliente.getInputStream());
+
+            fichero =input_cliente.readUTF();
             tamFichero=input_cliente.readInt();
 
             //comprovacion de lelvada del fichero
@@ -48,12 +50,11 @@ public class Servidor extends Conexion {
             bos.flush();
             bis.close();
             bos.close();
-            skCliente.close();
+            skServidor.close();
 
             System.out.println("-- CERRAMOS CONEXION --");
 
         }catch (Exception e){
-            //mensaje de error en caso de fallos en la conexión
             System.out.println("Errores encontrado en: " + e.getMessage());
         }
     }
