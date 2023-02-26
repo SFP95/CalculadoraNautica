@@ -16,9 +16,11 @@ public class Cliente extends Conexion {
             output_Server = new DataOutputStream(skCliente.getOutputStream());
             output_cliente = new DataOutputStream(skCliente.getOutputStream());
 
+            //EJERCICIO:
             /*El cliente tiene un fichero, le manda un resumen al servidor,
             este mismo hace un resumen si comprueba si coincide con el resumen recibido.
              */
+
             //seleccionamos el fichero .txt que queremos mandar al servidor
             FileOutputStream fichero= new FileOutputStream("src/main/java/Fichero/ficheroCliente.txt");
 

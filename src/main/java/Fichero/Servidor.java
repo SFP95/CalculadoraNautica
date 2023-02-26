@@ -2,8 +2,12 @@ package Fichero;
 
 import java.io.*;
 import java.security.MessageDigest;
+import java.util.Locale;
 
 public class Servidor extends Conexion {
+    byte[] recibiendoFichero;
+    int tamFichero;
+    String fichero;
     public Servidor() throws IOException {
         super("Servidor");
     }
@@ -14,36 +18,39 @@ public class Servidor extends Conexion {
             System.out.println("------------\n");
 
             //EJERCICIO:  FICHERO DE CLIENTE Y HACER RESUMEN
+            output_cliente =new DataOutputStream(skCliente.getOutputStream());
+            input_cliente =new DataInputStream(skCliente.getInputStream());
 
-            System.out.println("- Recibiendo el fichero del cliente");
+            //recibimos el fichero de cliente: y lo leemos en formato texto y numeríco
+            fichero =input_cliente.readUTF().toString();
+            tamFichero=input_cliente.readInt();
 
-            //recogida del fichero del cliente
-            input_cliente=new DataInputStream(skCliente.getInputStream());
-            ObjectInputStream fichIn= new ObjectInputStream(input_cliente);
-            Object mensaje = fichIn.readObject();
-            System.out.println("---- FICHERO LEIDO:\n\t"+mensaje);
+            //comprovacion de lelvada del fichero
+            System.out.println("ARCHIVO RECIVIDO: \n"+ fichero);
 
-            //hacemos el resumen del fichero
-            //transformamos el mensaje del cliente para podrer resumirlo
+            //ceamos flujo de salida para indicar donde guardamos el fichero
+            FileOutputStream guardoFichero = new FileOutputStream("FicheroGuardadoServidor.txt"+fichero);
+            BufferedOutputStream bos = new BufferedOutputStream(guardoFichero);
+            BufferedInputStream bis = new BufferedInputStream(skCliente.getInputStream());
 
-           // FileOutputStream fichero= new FileOutputStream(ficheroCliente);
-            MessageDigest md= MessageDigest.getInstance("SHA");
-/*
-            byte texto[]= fichero.toString().getBytes(); //resumimos
-            md.update(texto); // actualizamos
-            byte resumen[]=md.digest(); //calculamos el resument
-            //escribimos
-            fichIn.writeObject(texto);
-            fichIn.writeObject(resumen);
-            //cerramos
-            fichIn.close();
-            fichero.close();
+            //creamos array de bytes para lees los datos del ficher0
+            byte[] datosFichero = new byte[tamFichero];
 
-            //mandamos el resumen al cliente
-            output_cliente = new DataOutputStream(skCliente.getOutputStream());
-            System.out.println("- Mandando resumen al servidor"); //error aqui
-            output_cliente.writeUTF(fichOut.toString());*/
+            //obtenermos el archivo mediate lectura de bytes enviados
+            for (int i=0;i<datosFichero.length;i++){
+                datosFichero[i] = (byte) bis.read();
+            }
 
+            //escribimos el archivo
+            bos.write(datosFichero);
+
+            //cerramos flujos
+            bos.flush();
+            bis.close();
+            bos.close();
+            skCliente.close();
+
+            System.out.println("-- CERRAMOS CONEXION --");
 
         }catch (Exception e){
             //mensaje de error en caso de fallos en la conexión
