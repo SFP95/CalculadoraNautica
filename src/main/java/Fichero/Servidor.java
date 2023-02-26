@@ -31,7 +31,7 @@ public class Servidor extends Conexion {
             System.out.println("ARCHIVO RECIVIDO: \n"+ fichero);
 
             //ceamos flujo de salida para indicar donde guardamos el fichero
-            FileOutputStream guardoFichero = new FileOutputStream("FicheroGuardadoServidor.txt"+fichero);
+            FileOutputStream guardoFichero = new FileOutputStream("/home/alumno/IdeaProjects/CalculadoraNautica/src/main/java/Fichero/ficheroGuardadoServidor.txt"+fichero);
             BufferedOutputStream bos = new BufferedOutputStream(guardoFichero);
             BufferedInputStream bis = new BufferedInputStream(skCliente.getInputStream());
 
