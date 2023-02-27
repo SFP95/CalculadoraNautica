@@ -66,9 +66,9 @@ public class Cliente extends Conexion {
         return contenido;
     }
 
-    private void creamosResumen () {
+    private void creamosResumen () throws IOException {
         MessageDigest md;
-        String fihero = "Tenemos que hacerlo con un fichero";
+        String fihero = leerFichero();
 
         try {
             md = MessageDigest.getInstance("SHA");
@@ -125,7 +125,7 @@ public class Cliente extends Conexion {
 
             //leemos
             if (res){
-                System.out.println("- El servidor ha dicho:\n\n"+paquete.getTextoEnviar());
+                System.out.println("- El servidor ha dicho: "+paquete.resumen+"\n"+paquete.getTextoEnviar());
             }
         }catch (IOException e){
             System.out.println("-- Error IOEXCEPTION en 'recibirResumenyPaquete':"+e.getMessage());

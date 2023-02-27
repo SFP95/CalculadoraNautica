@@ -55,7 +55,7 @@ public class Servidor extends Conexion {
 
             //recogemos el reusmen del paquete
             paquete = (Paquete) objInput.readObject();
-            System.out.println("Recogemos el resumen del paquete:\n"+paquete);
+            System.out.println("Recogemos el resumen del paquete:\n"+paquete.getResumen());
 
             //comprobamos los dos resumenes
             comprobaresumenes(paquete.getResumen(),resumenCli);
@@ -74,7 +74,7 @@ public class Servidor extends Conexion {
 
     private String modificarTextoCliente () {
         String frase = paquete.getTextoEnviar();
-        frase += "\n*** El servidor sabe que esto no es un fichero ***";
+        frase += "\n*** El servidor dice que este es un buen fichero ***";
         paquete.setTextoEnviar(frase);
         return frase ;
     }
