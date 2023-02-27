@@ -6,9 +6,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
 public class Cliente extends Conexion {
-    // rutaFich="/home/alumno/IdeaProjects/CalculadoraNautica/src/main/java/Fichero/ficheroCliente.txt";
-
-    //public Scanner scan=new Scanner(System.in);
 
     static ObjectInputStream objInpt;
     static ObjectOutputStream objOut;
@@ -19,20 +16,54 @@ public class Cliente extends Conexion {
     }
     public  void  initCLiente(){
         try {
-            //Creamos el resumen 
+            //leemos el fichero
+            System.out.println("\n-- Leemos el fichero");
+            leerFichero();
+            System.out.println("---------------------------------");
+
+            //Creamos el resumen
+            System.out.println("-- Creamos el Resumen del fichero");
             creamosResumen();
+            System.out.println("---------------------------------");
 
             //enviamos resument de cliente y paquete a servidor
+            System.out.println("-- Enviamos el Resumen del fichero al Servidor");
             enviarResumenyPaquete(paquete);
+            System.out.println("---------------------------------");
 
             //recibimos resumen y paquete de servidor
+            System.out.println("-- Recibimos el resume y paquete del Servidor");
             recibirResumenyPaquete();
-            
+            System.out.println("---------------------------------");
+
             //cerramos todas las conexiones
             cerramosConexiones();
         }catch (Exception e){
             System.out.println("Errores encontrado en: " + e.getMessage());
         }
+    }
+
+    private static String leerFichero () throws IOException{
+        //leemos el fichero y su contenido
+        BufferedReader leetorFich = new BufferedReader(new FileReader("/home/alumno/IdeaProjects/CalculadoraNautica/src/main/java/Fichero/ficheroCliente.txt"));
+
+        //creamos un objeto cadena
+        StringBuilder cadena = new StringBuilder();
+
+        //introducimos el contenido del fichero en un variable
+        String linea = leetorFich.readLine();
+
+        //recorremos cada línea dentro de la cadena detexto separandolos con un salto de línea al final
+        while ((linea != null)){
+            cadena.append(linea+"\n");
+        }
+
+        //cerramos el fichero
+        leetorFich.close();
+
+        //metemos todo el contenido de la cadena en otra variable para poder realizar las transformaciones
+        String contenido = cadena.toString();
+        return contenido;
     }
 
     private void creamosResumen () {
@@ -94,7 +125,7 @@ public class Cliente extends Conexion {
 
             //leemos
             if (res){
-                System.out.println("El servidor ha dicho:\n"+paquete.getTextoEnviar());
+                System.out.println("- El servidor ha dicho:\n\n"+paquete.getTextoEnviar());
             }
         }catch (IOException e){
             System.out.println("-- Error IOEXCEPTION en 'recibirResumenyPaquete':"+e.getMessage());
@@ -107,10 +138,11 @@ public class Cliente extends Conexion {
     private boolean comprobarResumen (String resumenRecibido) {
         boolean res = false;
         String mensaje = "LOS MENSAJES NO COHINCIDEN";
-        System.out.println("-------------\nComprobando su lo resumenes cohinciden...\n");
+        System.out.println("---------------------------------");
+        System.out.println("\n-- Comprobando si lo resumenes cohinciden...\n");
         if (resumenRecibido.equals(paquete.getResumen())){
             res=true;
-            mensaje = "¡¡ LOS RESUMENES COHINCIDEN !!";
+            mensaje = "¡¡ LOS RESUMENES COHINCIDEN !!\n-----------------------------------\n";
         }
         System.out.println(mensaje);
         return res;

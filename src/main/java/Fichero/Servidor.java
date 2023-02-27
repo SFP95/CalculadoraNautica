@@ -22,13 +22,19 @@ public class Servidor extends Conexion {
             //EJERCICIO:  FICHERO DE CLIENTE Y HACER RESUMEN
 
             //metodo para recibir los datos del cliente
+            System.out.println("\n-- Recibimos los datos del Cliente");
             recibirResumenCliente();
+            System.out.println("---------------------------------");
 
             //Modificamos el mensaje del cliente:
+            System.out.println("-- Modificamos el mensaje del cliente....");
             String modificado = modificarTextoCliente();
+            System.out.println("---------------------------------");
 
             //enviamos a cliente el resument y ladoficicación
+            System.out.println("-- Enviamos al cliente el resumen y el pequete");
             enviarClienteTextos(modificado);
+            System.out.println("---------------------------------");
 
             //cerramos todas las conexiones
             cerramosConexiones();
@@ -68,7 +74,7 @@ public class Servidor extends Conexion {
 
     private String modificarTextoCliente () {
         String frase = paquete.getTextoEnviar();
-        frase += "\n*** El servidor sabe que esto no e sun fichero ***";
+        frase += "\n*** El servidor sabe que esto no es un fichero ***";
         paquete.setTextoEnviar(frase);
         return frase ;
     }
