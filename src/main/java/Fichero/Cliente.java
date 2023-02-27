@@ -2,73 +2,132 @@ package Fichero;
 
 import java.io.*;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
 public class Cliente extends Conexion {
-    String rutaFich="/home/alumno/IdeaProjects/CalculadoraNautica/src/main/java/Fichero/ficheroCliente.txt";
+    // rutaFich="/home/alumno/IdeaProjects/CalculadoraNautica/src/main/java/Fichero/ficheroCliente.txt";
 
     //public Scanner scan=new Scanner(System.in);
 
+    static ObjectInputStream objInpt;
+    static ObjectOutputStream objOut;
+    static Paquete paquete = new Paquete();
+    
     public Cliente() throws IOException {
         super("Cliente");
     }
     public  void  initCLiente(){
         try {
-            // salida de servidor y recogida de datos
-            output_Server = new DataOutputStream(skCliente.getOutputStream());
-            input_server = new DataInputStream(skCliente.getInputStream());
+            //Creamos el resumen 
+            creamosResumen();
 
-            //EJERCICIO:
+            //enviamos resument de cliente y paquete a servidor
+            enviarResumenyPaquete(paquete);
 
-            /*El cliente tiene un fichero, le manda un resumen al servidor,
-            este mismo hace un resumen si comprueba si coincide con el resumen recibido.
-             */
-
-            //Elegimos el fichero que queremos enviar y lo metemos en una variable
-            File fichero = new File(rutaFich);
-
-            //Obtenemos el tamaño del fichero
-            int tamFichero= (int) fichero.length();
-
-            //leemos el nombre y tmaño del fichero por pantalla
-            System.out.println("Enviamos un con nombre :"+ fichero.getName());
-            System.out.println("Con un tamaño de :"+ tamFichero+"\n-----------------------");
-
-            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(fichero));
-            BufferedOutputStream bos = new BufferedOutputStream(skCliente.getOutputStream());
-
-            System.out.println(fichero);
-            output_Server.writeUTF(fichero.toString());
-           /* ObjectOutputStream obFichOut = new ObjectOutputStream(skCliente.getOutputStream());
-            Object mensajeFich = fichOut.toString();
-            String leeFich= (String) mensajeFich;
-
-            System.out.println("Leo fichero:\n"+leeFich);*/
-
-
-
-
-/*
-            //mandamos a servidor:
-            output_Server.writeUTF(leeFich);
-            System.out.println("Fichero enviado");
-
-            //Cerramos
-
-            skCliente.close();
-
-
-            /*----- Lo que recibe el cliente de parte de servidor -----*/
-            //System.out.println("----------\n"+" - Recibimos el fichero resumido por el servidor:");
-
-           /* input_server= new DataInputStream(skCliente.getInputStream());
-            String resumen = input_server.readUTF();*7
-
-             /*if (fichOut.toString().equals(resumen)){
-                 System.out.println("\t¡¡ EL RESUMEN COHINCIDE !!\n");
-             }*/
+            //recibimos resumen y paquete de servidor
+            recibirResumenyPaquete();
+            
+            //cerramos todas las conexiones
+            cerramosConexiones();
         }catch (Exception e){
             System.out.println("Errores encontrado en: " + e.getMessage());
         }
+    }
+
+    private void creamosResumen () {
+        MessageDigest md;
+        String fihero = "Tenemos que hacerlo con un fichero";
+
+        try {
+            md = MessageDigest.getInstance("SHA");
+
+            //texto a bytes
+            byte dataBytes[] = fihero.getBytes();
+
+            //introducumos el resto a bytes a resumir
+            md.update(dataBytes);
+
+            //calculamos el resumen
+            byte resumen[] = md.digest();
+
+            paquete.setTextoEnviar(fihero);
+            paquete.setResumen(String.valueOf(resumen));
+        }catch (NoSuchAlgorithmException e){
+            System.out.println(" --> Error en 'creamosResumen': "+e.getMessage());
+        }
+    }
+
+    private void enviarResumenyPaquete (Paquete paquete) {
+        try {
+            //conetamos con el servidor
+
+
+            //creamos flujos de datos
+            output_Server = new DataOutputStream(skCliente.getOutputStream());
+            objOut = new ObjectOutputStream(skCliente.getOutputStream());
+
+            //enviamos resumen solo
+            output_Server.writeUTF(paquete.getResumen());
+
+            //eenviamos paquete
+            objOut.writeObject(paquete);
+            objOut.flush();
+        }catch (IOException e){
+            System.out.println("--> Error en 'enviarResumenyPaquete': "+e.getMessage());
+        }
+    }
+
+    private void recibirResumenyPaquete () {
+        try {
+            objInpt = new ObjectInputStream(skCliente.getInputStream());
+            input_server = new DataInputStream(skCliente.getInputStream());
+
+            //recibimos el resumento solo
+            String resumenRecibido = input_server.readUTF();
+
+            //recibimos el paquete
+            paquete = (Paquete) objInpt.readObject();
+
+            //comprobamos resumenes
+            boolean res = comprobarResumen(resumenRecibido);
+
+            //leemos
+            if (res){
+                System.out.println("El servidor ha dicho:\n"+paquete.getTextoEnviar());
+            }
+        }catch (IOException e){
+            System.out.println("-- Error IOEXCEPTION en 'recibirResumenyPaquete':"+e.getMessage());
+        }catch (ClassNotFoundException e){
+            System.out.println("-- Error ClassNotFoundException en 'recibirResumenyPaquete':"+e.getMessage());
+
+        }
+    }
+
+    private boolean comprobarResumen (String resumenRecibido) {
+        boolean res = false;
+        String mensaje = "LOS MENSAJES NO COHINCIDEN";
+        System.out.println("-------------\nComprobando su lo resumenes cohinciden...\n");
+        if (resumenRecibido.equals(paquete.getResumen())){
+            res=true;
+            mensaje = "¡¡ LOS RESUMENES COHINCIDEN !!";
+        }
+        System.out.println(mensaje);
+        return res;
+    }
+
+    private void cerramosConexiones () {
+       try {
+           System.out.println("-- CERRAMOS CONEXION --");
+           input_server.close();
+           output_Server.close();
+           objInpt.close();
+           objOut.close();
+           skServidor.close();
+           skCliente.close();
+       }catch (IOException e){
+           System.out.println("-- Error IOEXCEPTION en 'cerramosConexiones':"+e.getMessage());
+       }
+
     }
 }
