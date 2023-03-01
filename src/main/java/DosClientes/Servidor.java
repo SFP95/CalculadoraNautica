@@ -8,6 +8,7 @@ import java.util.Set;
 public class Servidor extends Conexion {
     private Set<String> userNames = new HashSet<>();
     private Set<UserThread> userThreads = new HashSet<>();
+    private static Socket skCliente;
     public Servidor() throws IOException {
         super("Servidor");
     }

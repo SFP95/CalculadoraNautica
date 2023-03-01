@@ -10,7 +10,7 @@ public class Conexion {
     private  final int _PUERTO=6678;
     private  final String _HOST="127.0.0.1";
     protected ServerSocket skServidor;
-    protected Socket skCliente;
+    protected static Socket skCliente;
     protected DataOutputStream output_Server, output_cliente;
     DataInputStream intput_cliente, input_server;
 

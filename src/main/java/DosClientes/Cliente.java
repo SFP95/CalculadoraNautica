@@ -1,12 +1,14 @@
 package DosClientes;
 
 import java.io.*;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
 public class Cliente extends Conexion {
     private String userName;
+    private static ServerSocket skServidor;
 
     public Cliente() throws IOException {
         super("Cliente");
